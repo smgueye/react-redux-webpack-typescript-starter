@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": "./",
+    "jsx": "react",
+    "module": "esnext",
+    "noImplicitAny": true,
+    "outDir": "./dist/",
+    "paths": {
+      "@features": ["./src/features"]
+    },
+    "target": "es5",
+    "sourceMap": true
+  }
+}
