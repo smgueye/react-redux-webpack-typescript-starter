@@ -7,7 +7,12 @@
     "noImplicitAny": true,
     "outDir": "./dist/",
     "paths": {
-      "@features": ["./src/features"]
+      "Features": ["./src/features"],
+      "Layouts": ["./src/layouts"],
+      "Routes": ["./src/routes"],
+      "Services": ["./src/services"],
+      "Store": ["./src/store"],
+      "Views": ["./src/views"]
     },
     "target": "es5",
     "sourceMap": true

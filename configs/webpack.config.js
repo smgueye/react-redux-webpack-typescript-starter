@@ -10,7 +10,12 @@ const Paths = {
   root: path.resolve(__dirname, ".."),
   src: path.resolve(__dirname, "../src"),
   alias: {
-    features: path.resolve(__dirname, "../src/features"),
+    Features: path.resolve(__dirname, "../src/features"),
+    Layouts: path.resolve(__dirname, "../src/layouts"),
+    Routes: path.resolve(__dirname, "../src/routes"),
+    Services: path.resolve(__dirname, "../src/services"),
+    Store: path.resolve(__dirname, "../src/store"),
+    Views: path.resolve(__dirname, "../src/views"),
   },
 };
 
@@ -35,10 +40,6 @@ module.exports = {
         use: "ts-loader",
         exclude: /node_modules/,
       },
-      // {
-      //   test: /\.s[ac]ss$/i,
-      //   use: ["style-loader", "css-loader", "sass-loader"],
-      // },
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -77,9 +78,7 @@ module.exports = {
       },
     ],
   },
-  optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
-  },
+  optimization: {},
   output: {
     filename: "[name].js",
     path: Paths.dist,
@@ -94,7 +93,12 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      "@features": Paths.alias.features,
+      Features: Paths.alias.Features,
+      Layouts: Paths.alias.Layouts,
+      Routes: Paths.alias.Routes,
+      Services: Paths.alias.Services,
+      Store: Paths.alias.Store,
+      Views: Paths.alias.Views,
     },
     extensions: [".tsx", ".ts", ".js"],
   },
