@@ -1,11 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const TerserJSPlugin = require("terser-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const Paths = {
-  dist: path.resolve(__dirname, "../public/assets"),
+  dist: path.resolve(__dirname, "../dist"),
   public: path.resolve(__dirname, "../public"),
   root: path.resolve(__dirname, ".."),
   src: path.resolve(__dirname, "../src"),
@@ -21,15 +20,14 @@ const Paths = {
 
 const isDev = process.env.NODE_ENV === "development";
 
-module.exports = {
-  mode: "development",
+const config = {
+  mode: process.env.NODE_ENV,
   context: Paths.root,
   devServer: {
     contentBase: Paths.public,
     hot: true,
     overlay: true,
   },
-  devtool: "inline-source-map",
   entry: {
     app: "./src/index.tsx",
   },
@@ -37,7 +35,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        loaders: ["react-hot-loader/webpack", "ts-loader"],
         exclude: /node_modules/,
       },
       {
@@ -78,9 +76,8 @@ module.exports = {
       },
     ],
   },
-  optimization: {},
   output: {
-    filename: "[name].js",
+    filename: isDev ? "[name].js" : "[name].[hash].js",
     path: Paths.dist,
     publicPath: "/assets/",
   },
@@ -102,4 +99,17 @@ module.exports = {
     },
     extensions: [".tsx", ".ts", ".js"],
   },
+  watch: isDev,
 };
+
+if (isDev) {
+  config.devtool = "inline-source-map";
+}
+
+if (!isDev) {
+  config.optimization = {
+    minimizer: [new UglifyJsPlugin()],
+  };
+}
+
+module.exports = config;

@@ -1,8 +1,8 @@
-import { Article } from 'MyModels';
+import { Article } from "Models";
 
-import * as localStorage from './local-storage-service';
+import * as localStorage from "./local-storage-service";
 
-let articles: Article[] = localStorage.get<Article[]>('articles') || [];
+let articles: Article[] = localStorage.get<Article[]>("articles") || [];
 
 const TIMEOUT = 750;
 
@@ -26,7 +26,7 @@ export function createArticle(article: Article): Promise<Article[]> {
 export function updateArticle(article: Article): Promise<Article[]> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      articles = articles.map(i => (i.id === article.id ? article : i));
+      articles = articles.map((i) => (i.id === article.id ? article : i));
       resolve(articles);
     }, TIMEOUT);
   });
@@ -35,7 +35,7 @@ export function updateArticle(article: Article): Promise<Article[]> {
 export function deleteArticle(article: Article): Promise<Article[]> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      articles = articles.filter(i => i.id !== article.id);
+      articles = articles.filter((i) => i.id !== article.id);
       resolve(articles);
     }, TIMEOUT);
   });
