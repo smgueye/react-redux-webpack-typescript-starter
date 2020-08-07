@@ -82,7 +82,7 @@ const config = {
   output: {
     filename: isDev ? "[name].js" : "[name].[hash].js",
     path: Paths.dist,
-    publicPath: "/assets/",
+    publicPath: "/",
   },
   plugins: [
     new HtmlWebpackPlugin({
