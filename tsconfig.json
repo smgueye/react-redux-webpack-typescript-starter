@@ -9,6 +9,7 @@
     "paths": {
       "Features": ["./src/features"],
       "Layouts": ["./src/layouts"],
+      "Locales": ["./src/locales"],
       "Routes": ["./src/routes"],
       "Services": ["./src/services"],
       "Store": ["./src/store"],

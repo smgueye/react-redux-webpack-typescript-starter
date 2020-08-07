@@ -8,7 +8,7 @@
     "clean": "rimraf dist",
     "dev": "NODE_ENV=development webpack-dev-server --config configs/webpack.config.js",
     "dev:dashboard": "NODE_ENV=development webpack-dashboard -m -- webpack-dev-server --config configs/webpack.config.js",
-    "prod": "yarn run clean && NODE_ENV=production ./node_modules/.bin/webpack --config configs/webpack.config.js"
+    "prod": "yarn run clean && NODE_ENV=production ./node_modules/.bin/webpack --config configs/webpack.config.js --optimize-minimize"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.5",
@@ -65,6 +65,7 @@
     "global": "^4.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-intl": "^5.4.5",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-toastify": "^6.0.8",

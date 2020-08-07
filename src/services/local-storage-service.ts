@@ -10,7 +10,7 @@ export function set<T = object>(key: string, value: T): void {
     const serializedValue = JSON.stringify(value);
     localStorage.setItem(PREFIX + key, serializedValue);
   } catch (error) {
-    throw new Error('store serialization failed');
+    throw new Error("store serialization failed");
   }
 }
 
@@ -26,6 +26,6 @@ export function get<T = object>(key: string): T | undefined {
     }
     return JSON.parse(serializedValue);
   } catch (error) {
-    throw new Error('store deserialization failed');
+    throw new Error("store deserialization failed");
   }
 }

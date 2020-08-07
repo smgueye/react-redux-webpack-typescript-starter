@@ -8,26 +8,28 @@ const Paths = {
   public: path.resolve(__dirname, "../public"),
   root: path.resolve(__dirname, ".."),
   src: path.resolve(__dirname, "../src"),
-  alias: {
-    Features: path.resolve(__dirname, "../src/features"),
-    Layouts: path.resolve(__dirname, "../src/layouts"),
-    Routes: path.resolve(__dirname, "../src/routes"),
-    Services: path.resolve(__dirname, "../src/services"),
-    Store: path.resolve(__dirname, "../src/store"),
-    Views: path.resolve(__dirname, "../src/views"),
-  },
 };
-
+const AliasPaths = {
+  Features: path.resolve(__dirname, "../src/features"),
+  Layouts: path.resolve(__dirname, "../src/layouts"),
+  Locales: path.resolve(__dirname, "../src/locales"),
+  Routes: path.resolve(__dirname, "../src/routes"),
+  Services: path.resolve(__dirname, "../src/services"),
+  Store: path.resolve(__dirname, "../src/store"),
+  Views: path.resolve(__dirname, "../src/views"),
+};
 const isDev = process.env.NODE_ENV === "development";
-
+console.log({ env: process.env.NODE_ENV });
 const config = {
   mode: process.env.NODE_ENV,
   context: Paths.root,
   devServer: {
     contentBase: Paths.public,
+    historyApiFallback: true,
     hot: true,
     overlay: true,
   },
+  devtool: isDev ? "inline-source-map" : "source-map",
   entry: {
     app: "./src/index.tsx",
   },
@@ -76,13 +78,18 @@ const config = {
       },
     ],
   },
+  optimization: {},
   output: {
     filename: isDev ? "[name].js" : "[name].[hash].js",
     path: Paths.dist,
     publicPath: "/assets/",
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      inject: true,
+      template: path.resolve(__dirname, "..", "public", "index.html"),
+    }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css",
@@ -90,26 +97,26 @@ const config = {
   ],
   resolve: {
     alias: {
-      Features: Paths.alias.Features,
-      Layouts: Paths.alias.Layouts,
-      Routes: Paths.alias.Routes,
-      Services: Paths.alias.Services,
-      Store: Paths.alias.Store,
-      Views: Paths.alias.Views,
+      Features: AliasPaths.Features,
+      Layouts: AliasPaths.Layouts,
+      Locales: AliasPaths.Locales,
+      Routes: AliasPaths.Routes,
+      Services: AliasPaths.Services,
+      Store: AliasPaths.Store,
+      Views: AliasPaths.Views,
     },
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js", ".json"],
   },
   watch: isDev,
 };
 
-if (isDev) {
-  config.devtool = "inline-source-map";
-}
-
 if (!isDev) {
-  config.optimization = {
-    minimizer: [new UglifyJsPlugin()],
-  };
+  config.plugins.push(
+    new UglifyJsPlugin({
+      sourceMap: true,
+    })
+  );
+  config.optimization.splitChunks = { chunks: "all" };
 }
 
 module.exports = config;
