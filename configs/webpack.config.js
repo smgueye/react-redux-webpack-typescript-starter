@@ -11,6 +11,7 @@ const Paths = {
 };
 const AliasPaths = {
   Features: path.resolve(__dirname, "../src/features"),
+  Lang: path.resolve(__dirname, "../src/lang"),
   Layouts: path.resolve(__dirname, "../src/layouts"),
   Locales: path.resolve(__dirname, "../src/locales"),
   Routes: path.resolve(__dirname, "../src/routes"),
@@ -96,15 +97,7 @@ const config = {
     }),
   ],
   resolve: {
-    alias: {
-      Features: AliasPaths.Features,
-      Layouts: AliasPaths.Layouts,
-      Locales: AliasPaths.Locales,
-      Routes: AliasPaths.Routes,
-      Services: AliasPaths.Services,
-      Store: AliasPaths.Store,
-      Views: AliasPaths.Views,
-    },
+    alias: AliasPaths,
     extensions: [".tsx", ".ts", ".js", ".json"],
   },
   watch: isDev,

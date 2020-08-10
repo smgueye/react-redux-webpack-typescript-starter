@@ -1,43 +1,40 @@
 import * as React from "react";
 
-import { ConnectedRouter } from "connected-react-router";
-import { History } from "history";
-import { Provider } from "react-redux";
+import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 
 // CSS
 import "./app.scss";
 
-// Views
+import { RootState } from "MyTypes";
+
 import Home from "./views/Home";
 
-// Modules
-import Services from "Services";
+import { Provider as I18nProvider } from "./lang/Provider";
 
-// Helpers
 import { getPath } from "./router-paths";
 
-interface Props {
-  store: any;
-  history: History;
-}
+const mapStateToProps = ({ configs }: RootState) => {
+  const { locale } = configs;
+  return {
+    locale,
+  };
+};
+const mapDispatchToProps = {};
 
-const { I18n } = Services;
-const { Provider: I18nProvider, Locales } = I18n;
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type State = {};
 
-export class App extends React.Component<Props, {}> {
+export class App extends React.Component<Props, State> {
   render() {
-    const { store, history } = this.props;
-
+    const { locale } = this.props;
     return (
-      <Provider store={store}>
-        <I18nProvider locale={Locales.FRENCH}>
-          <ConnectedRouter history={history}>
-            <Route exact={true} component={Home} path={getPath("home")} />
-            <Route path="*" render={() => <div>Page not found!</div>} />
-          </ConnectedRouter>
-        </I18nProvider>
-      </Provider>
+      <I18nProvider locale={locale}>
+        <Route exact={true} component={Home} path={getPath("home")} />
+        <Route path="*" render={() => <div>Page not found!</div>} />
+      </I18nProvider>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
