@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "jsx": "react",
     "module": "esnext",
     "moduleResolution": "node",

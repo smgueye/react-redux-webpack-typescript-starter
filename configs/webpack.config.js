@@ -1,7 +1,11 @@
 const path = require("path");
+const webpack = require("webpack");
+const fs = require("fs");
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const DotEnv = require("dotenv");
 
 const Paths = {
   dist: path.resolve(__dirname, "../dist"),
@@ -20,7 +24,16 @@ const AliasPaths = {
   Views: path.resolve(__dirname, "../src/views"),
 };
 const isDev = process.env.NODE_ENV === "development";
-console.log({ env: process.env.NODE_ENV });
+
+const basePath = Paths.root + "/.env";
+const envPath = basePath + "." + process.env.NODE_ENV;
+const finalPath = fs.existsSync(envPath) ? envPath : basePath;
+const env = DotEnv.config({ path: finalPath }).parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
 const config = {
   mode: process.env.NODE_ENV,
   context: Paths.root,
@@ -95,6 +108,7 @@ const config = {
       filename: "[name].css",
       chunkFilename: "[id].css",
     }),
+    new webpack.DefinePlugin(envKeys),
   ],
   resolve: {
     alias: AliasPaths,

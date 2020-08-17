@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { translate } from "Lang";
 import { RootState } from "MyTypes";
-import { changeLocale } from "Features/core/actions";
+import { changeLocale, loginUserAsync } from "Features/core/actions";
 import { getConfigs } from "Features/core/selectors";
 
 const mapStateToProps = (state: RootState) => ({
@@ -12,6 +12,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 const mapDispatchToProps = {
   changeLocale,
+  loginUser: loginUserAsync.request,
 };
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -28,12 +29,21 @@ export class Home extends React.Component<Props, State> {
         <button data-lang-id="fr" onClick={this.changeLocale.bind(this)}>
           Change Locale To FR
         </button>
+        <a href="#" onClick={this.requestLogin.bind(this)}>
+          Login user test
+        </a>
       </div>
     );
   }
 
   changeLocale = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     this.props.changeLocale(event.currentTarget.dataset.langId as "en" | "fr");
+  };
+
+  requestLogin = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    this.props.loginUser({ email: "mgueye.io", password: "sdn" });
   };
 }
 

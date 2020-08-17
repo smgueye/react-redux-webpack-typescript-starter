@@ -1,14 +1,38 @@
 import { combineReducers } from "redux";
 
-import { createReducer } from "typesafe-actions";
+import { createReducer, ActionType } from "typesafe-actions";
 
-import { CoreActions } from "./actions";
+import * as actions from "./actions";
+import { LoggedUser } from "Models";
+
+type CoreActionTypes = ActionType<typeof actions>;
+
+const localReducer = createReducer("fr" as any).handleAction(
+  actions.CoreActions.CHANGE_LOCALE as any,
+  (state: any, action: CoreActionTypes | any) => action.payload
+);
+
+const isLogingUserReduder = createReducer(false as boolean)
+  .handleAction(actions.loginUserAsync.request as any, (state, action) => true)
+  .handleAction(
+    [actions.loginUserAsync.success, actions.loginUserAsync.failure] as any,
+    (state, action) => false
+  );
+
+const loggedUserReducer = createReducer({} as LoggedUser | any)
+  .handleAction(
+    actions.loginUserAsync.success as any,
+    (state, action: CoreActionTypes | any) => (action.payload as any).data
+  )
+  .handleAction(
+    actions.loginUserAsync.failure as any,
+    (state: any, action: any) => ({ error: action.payload })
+  );
 
 const reducer = combineReducers({
-  locale: createReducer("fr" as any).handleAction(
-    CoreActions.CHANGE_LOCALE as any,
-    (_: any, action: any) => action.payload
-  ),
+  isLogingUser: isLogingUserReduder,
+  locale: localReducer,
+  loggedUser: loggedUserReducer,
 });
 
 export default reducer;

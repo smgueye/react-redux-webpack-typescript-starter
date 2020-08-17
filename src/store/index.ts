@@ -1,3 +1,4 @@
+import { RootAction, RootState, Services } from "MyTypes";
 import { createStore, applyMiddleware } from "redux";
 import { createEpicMiddleware } from "redux-observable";
 import { createBrowserHistory } from "history";
@@ -8,7 +9,12 @@ import rootReducer from "./root-reducer";
 import rootEpic from "./root-epic";
 import services from "Services";
 
-export const epicMiddleware = createEpicMiddleware({
+export const epicMiddleware = createEpicMiddleware<
+  RootAction,
+  RootAction,
+  RootState,
+  Services
+>({
   dependencies: services,
 });
 
