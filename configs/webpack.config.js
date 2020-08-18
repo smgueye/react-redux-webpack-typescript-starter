@@ -22,6 +22,7 @@ const AliasPaths = {
   Services: path.resolve(__dirname, "../src/services"),
   Store: path.resolve(__dirname, "../src/store"),
   Views: path.resolve(__dirname, "../src/views"),
+  react: path.resolve(__dirname, "../node_modules/react"),
 };
 const isDev = process.env.NODE_ENV === "development";
 

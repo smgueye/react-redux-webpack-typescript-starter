@@ -5,7 +5,7 @@ import { IntlProvider, FormattedMessage } from "react-intl";
 import AppLocale from "./index";
 
 type I18nProviderType = {
-  children: JSX.Element[];
+  children: JSX.Element[] | JSX.Element;
   locale: "en" | "fr";
 };
 

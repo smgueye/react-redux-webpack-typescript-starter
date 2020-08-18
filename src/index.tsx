@@ -1,41 +1,21 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-
-import { ConnectedRouter } from "connected-react-router";
-import { Provider } from "react-redux";
-
-import store, {
-  history,
-  // epicMiddleware
-} from "Store";
-
+import store from "Store";
 import App from "./app";
 
 const renderRoot = (app: JSX.Element) => {
   ReactDOM.render(app, document.getElementById("root"));
 };
 
-const mainApp = () => (
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App />
-    </ConnectedRouter>
-  </Provider>
-);
-
 if (process.env.NODE_ENV === "production") {
-  renderRoot(mainApp());
+  renderRoot(<App />);
 } else {
   const AppContainer = require("react-hot-loader").AppContainer;
 
   renderRoot(
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <AppContainer>
-          <App />
-        </AppContainer>
-      </ConnectedRouter>
-    </Provider>
+    <AppContainer>
+      <App />
+    </AppContainer>
   );
 
   if (module.hot) {
@@ -45,13 +25,9 @@ if (process.env.NODE_ENV === "production") {
       const NextApp = (await import("./app")).default;
 
       renderRoot(
-        <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <AppContainer>
-              <NextApp />
-            </AppContainer>
-          </ConnectedRouter>
-        </Provider>
+        <AppContainer>
+          <NextApp />
+        </AppContainer>
       );
     });
 
@@ -61,10 +37,10 @@ if (process.env.NODE_ENV === "production") {
       store.replaceReducer(newRootReducer);
     });
 
-    // epics
-    // module.hot.accept("./store/root-epic", () => {
-    //   const newRootEpic = require("./store/root-epic").default;
-    //   store.replaceEpic(newRootEpic); // To confirm.
-    // });
+    // epics;
+    module.hot.accept("./store/root-epic", () => {
+      const newRootEpic = require("./store/root-epic").default;
+      (store as any).replaceEpic(newRootEpic); // To confirm.
+    });
   }
 }

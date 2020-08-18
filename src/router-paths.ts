@@ -1,6 +1,8 @@
 const pathsMap = {
-  home: () => "/",
-  addArticle: () => "/add-article",
+  about: () => "/app/about",
+  app: () => "/app",
+  auth: () => "/sign_in",
+  home: () => "/app/home",
   // viewArticle: (articleId: string) => `/articles/${articleId}`,
   // editArticle: (articleId: string) => `/articles/${articleId}/edit`,
 };

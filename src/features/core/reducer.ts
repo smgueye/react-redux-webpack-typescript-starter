@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 
 import { createReducer, ActionType } from "typesafe-actions";
 
+import httpService from "../../services/http";
 import * as actions from "./actions";
 import { LoggedUser } from "Models";
 
@@ -22,7 +23,13 @@ const isLogingUserReduder = createReducer(false as boolean)
 const loggedUserReducer = createReducer({} as LoggedUser | any)
   .handleAction(
     actions.loginUserAsync.success as any,
-    (state, action: CoreActionTypes | any) => (action.payload as any).data
+    (state, action: CoreActionTypes | any) => {
+      const { token, user } = (action.payload as any).data;
+
+      httpService.token = token;
+
+      return { ...user, token };
+    }
   )
   .handleAction(
     actions.loginUserAsync.failure as any,

@@ -4,4 +4,5 @@
 
 export default {
   hello: "Hello",
+  "auth.title": "Authentication",
 };

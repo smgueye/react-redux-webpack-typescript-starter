@@ -39,11 +39,18 @@ export class HttpService {
    */
   get token(): string {
     let session = localStorage.getItem(this._sessionNamespace);
+    if (session) {
+      session = JSON.parse(session);
+    }
 
-    if (!session) session = '{"token": null}';
+    if (!session) session = JSON.parse('{"token": null}');
 
-    const { token } = JSON.parse(session);
+    const { token } = session as any;
     return token;
+  }
+
+  set token(T: string) {
+    localStorage.setItem(this._sessionNamespace, `{"token":"${T}"}`);
   }
 
   /**
@@ -115,7 +122,7 @@ export class HttpService {
     params,
     payload,
   }: CreateParamsType): Promise<AxiosResponse> {
-    return this._client.put(resource, payload, {
+    return this._client.post(resource, payload, {
       params,
     });
   }

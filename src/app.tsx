@@ -1,40 +1,23 @@
 import * as React from "react";
+import { ConnectedRouter } from "connected-react-router";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
-import { connect } from "react-redux";
-import { Route } from "react-router-dom";
+import store, { history, persistor } from "Store";
 
 // CSS
 import "./app.scss";
 
-import { RootState } from "MyTypes";
+import Container from "./layouts";
 
-import Home from "./views/Home";
+export const App: React.FC = () => (
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <ConnectedRouter history={history}>
+        <Container />
+      </ConnectedRouter>
+    </PersistGate>
+  </Provider>
+);
 
-import { Provider as I18nProvider } from "./lang/Provider";
-
-import { getPath } from "./router-paths";
-
-const mapStateToProps = ({ configs }: RootState) => {
-  const { locale } = configs;
-  return {
-    locale,
-  };
-};
-const mapDispatchToProps = {};
-
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
-type State = {};
-
-export class App extends React.Component<Props, State> {
-  render() {
-    const { locale } = this.props;
-    return (
-      <I18nProvider locale={locale}>
-        <Route exact={true} component={Home} path={getPath("home")} />
-        <Route path="*" render={() => <div>Page not found!</div>} />
-      </I18nProvider>
-    );
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
