@@ -8,7 +8,11 @@
     "clean": "rimraf dist",
     "dev": "NODE_ENV=development webpack-dev-server --config configs/webpack.config.js",
     "dev:dashboard": "NODE_ENV=development webpack-dashboard -m -- webpack-dev-server --config configs/webpack.config.js",
+<<<<<<< HEAD
     "prod": "yarn run clean && NODE_ENV=production ./node_modules/.bin/webpack --config configs/webpack.config.js --optimize-minimize"
+=======
+    "build": "yarn run clean && NODE_ENV=production ./node_modules/.bin/webpack --config configs/webpack.config.js --optimize-minimize"
+>>>>>>> develop
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
