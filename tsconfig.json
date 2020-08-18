@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "baseUrl": "./",
+    "checkJs": false,
+    "declaration": false,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "isolatedModules": false,
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmitOnError": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "outDir": "./dist/",
+    "paths": {
+      "Features": ["./src/features"],
+      "Lang": ["./src/lang"],
+      "Layouts": ["./src/layouts"],
+      "Locales": ["src/lang/locales"],
+      "Routes": ["./src/routes"],
+      "Services": ["./src/services"],
+      "Store": ["./src/store"],
+      "Views": ["./src/views"]
+    },
+    "pretty": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "target": "es5",
+    "strict": true,
+    "skipLibCheck": true,
+    "sourceMap": true
+  }
+}
