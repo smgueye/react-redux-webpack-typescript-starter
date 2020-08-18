@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-# react-redux-webpack-typescript-starter
-
-React / Redux / Typescript / Webpack - Starter
-https://www.carlrippon.com/strongly-typed-react-redux-code-with-typescript/
-=======
 # React Starter
 
 Typescript, rxjs observable, redux starter.
@@ -61,4 +55,3 @@ yarn run build  [-- --env=prod]         | Lint code and build app for production
 
 ## Licence
 The MIT License (MIT)
->>>>>>> develop
